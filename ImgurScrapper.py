@@ -15,8 +15,7 @@ count = int(count)
 imgurBaseUrl = 'https://imgur.com'
 imgurSearchQuery = '/search/score/week?q='
 
-browser =  webdriver.Chrome(executable_path="chrome_executable_path")
-
+browser =  webdriver.Chrome(executable_path='chrome_executable_path')
 
 # Iterate through all gallery links and get the image/video. Download them individually.
 def parseAndDownloadContent(link):
@@ -24,30 +23,29 @@ def parseAndDownloadContent(link):
     browser.implicitly_wait(3)
     browser.get(link)
     browser.find_elements_by_class_name('post-image-container')
-    page_source = browser.page_source
-    soup = BeautifulSoup(page_source, 'lxml')
+    pageSource = browser.pageSource
+    soup = BeautifulSoup(pageSource, 'lxml')
 
     # Find all pictures 
-    postPics = soup.find_all('img', class_='image-placeholder')
-    regPics = soup.find_all('img', class_='post-image-placeholder')
+    imgPlaceholders = soup.find_all('img', class_='image-placeholder')
+    postImgPlaceholders = soup.find_all('img', class_='post-image-placeholder')
     pictureList = []
 
-    for a in regPics:
-        source = a['src']
+    for postImgPlaceholder in postImgPlaceholders:
+        source = postImgPlaceholder['src']
         if 'https:' not in source:
             source = 'https:' + source
-        print(source)
         pictureList.append(source)
 
-    for pic in postPics:
-        source = pic['src']
+    for imgPlaceholder in imgPlaceholders:
+        source = imgPlaceholder['src']
         if 'https:' not in source:
             source = 'https:' + source
-        print(source)
         pictureList.append(source)
 
-    for i in pictureList:
-        urllib.request.urlretrieve(i, folder + '\\' + str(uuid.uuid4()) + '.jpg') 
+    # Iterate and append random UUIDs to the downloaded images 
+    for pictureLink in pictureList:
+        urllib.request.urlretrieve(pictureLink, folder + '\\' + str(uuid.uuid4()) + '.jpg') 
 
     # Find all videos 
     videos = soup.find_all('video')
@@ -59,8 +57,8 @@ def parseAndDownloadContent(link):
             source = 'https:' + source
         videoList.append(source)
 
-    for i in videoList:
-        urllib.request.urlretrieve(i, folder + '\\' + str(uuid.uuid4()) + '.mp4') 
+    for link in videoList:
+        urllib.request.urlretrieve(link, folder + '\\' + str(uuid.uuid4()) + '.mp4') 
     return True
 
 response = requests.get(imgurBaseUrl + imgurSearchQuery + search)
