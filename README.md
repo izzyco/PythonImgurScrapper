@@ -5,5 +5,11 @@ Python Imgur Scraper
 Requirements
 
 - Install Selenium for Python
+```shell
+pip install selenium
+```
 - Install Beautiful Soup for Python
-- Install the ChromeDriver here `https://chromedriver.chromium.org/downloads` replace the path `chrome_executable_path` to the executable path
+```shell
+pip install beautifulsoup4
+```
+- Install the correct ChromeDriver version here `https://chromedriver.chromium.org/downloads` replace the path `chrome_executable_path` to the executable path
