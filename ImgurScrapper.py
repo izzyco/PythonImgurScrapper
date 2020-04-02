@@ -52,7 +52,10 @@ def parseAndDownloadContent(link):
     videoList = []
     for video in videos:
         sourceObj = video.find('source')
-        source = sourceObj['src']
+        if sourceObj == None:
+            break
+        else:   
+            source = sourceObj['src']
         if 'https:' not in source:
             source = 'https:' + source
         videoList.append(source)
