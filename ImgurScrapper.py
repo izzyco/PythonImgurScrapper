@@ -23,7 +23,7 @@ def parseAndDownloadContent(link):
     browser.implicitly_wait(3)
     browser.get(link)
     browser.find_elements_by_class_name('post-image-container')
-    pageSource = browser.pageSource
+    pageSource = browser.page_source
     soup = BeautifulSoup(pageSource, 'lxml')
 
     # Find all pictures 
